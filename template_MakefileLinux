@@ -1,0 +1,38 @@
+# Template Makefile for RTGP lab lecture exercises - Linux environment
+# author: Davide Gadia
+# Real-Time Graphics Programming - a.a. 2023/2024
+# Master degree in Computer Science
+# Universita' degli Studi di Milano
+#
+
+# name of the file
+FILENAME = work06b
+
+CC = gcc
+CXX = g++
+
+# Include path
+IDIR = ../../vcpkg/installed/x64-linux/include
+IDIR2 = ../../include/
+
+# Libraries path
+LDIR = ../../vcpkg/installed/x64-linux/lib
+
+# compiler flags:
+CXXFLAGS  = -g -O0 -x c++ -Wall -Wno-invalid-offsetof -std=c++11 -I$(IDIR) -I$(IDIR2)
+
+# linker flags:
+LDFLAGS = -L$(LDIR) -lglfw3 -lassimp -lz -lminizip -lkubazip -lpoly2tri -ldraco -lpugixml -lBullet3Common -lBulletCollision -lBulletDynamics -lLinearMath
+
+SOURCES = ../../include/glad/glad.c $(FILENAME).cpp
+
+TARGET = $(FILENAME).out
+
+.PHONY : all
+all:
+	$(CXX) $(CXXFLAGS) $(SOURCES) $(LDFLAGS) -o $(TARGET)
+
+.PHONY : clean
+clean :
+	-rm $(TARGET)
+	-rm -R $(TARGET).dSYM
